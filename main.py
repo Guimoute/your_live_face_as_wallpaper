@@ -42,13 +42,17 @@ if __name__ == "__main__":
 
     # For a user-specified time, update the wallpaper with the current video feed's latest image.
     live_image_path = os.path.join(os.path.dirname(__file__), "your_live_face.png")
-    frames = round(LIVE_WALLPAPER_DURATION * LIVE_WALLPAPER_FPS)
-    for _ in range(frames):
-        cv2.imwrite(live_image_path, source.read()[1])
-        set_wallpaper(live_image_path)
-        time.sleep(1/LIVE_WALLPAPER_FPS)
+    sleep_time = 1/LIVE_WALLPAPER_FPS
+    t0 = time.perf_counter()
+    while time.perf_counter() - t0 < LIVE_WALLPAPER_DURATION:
+        success, frame = source.read()
+        if success:
+            cv2.imwrite(live_image_path, frame)
+            set_wallpaper(live_image_path)
+        time.sleep(sleep_time)
 
     # Final clean-up.
     set_wallpaper(old_wallpaper_path)
-    os.remove(live_image_path)
     source.release()
+    os.remove(live_image_path)
+
