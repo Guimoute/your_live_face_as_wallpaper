@@ -1,1 +1,2 @@
-your_live_face_as_wallpaper
+This code takes a video source and temporarily applies it as your desktop wallpaper for the desired duration. Afterwards, your previous wallpaper is
+restored. Have fun!
