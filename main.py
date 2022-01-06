@@ -9,6 +9,7 @@ __author__ = "Guimoute (https://github.com/Guimoute)"
 LIVE_WALLPAPER_DURATION = 5
 LIVE_WALLPAPER_FPS = 30 # Do not be greedy here.
 VIDEO_SOURCE:int = 0
+PRELOAD_VIDEO_SOURCE:bool = True
 
 # Imports.
 import ctypes
@@ -39,6 +40,9 @@ if __name__ == "__main__":
     source = cv2.VideoCapture(VIDEO_SOURCE) # This line may take 10s, be patient.
     if source is None or not source.isOpened():
         raise ValueError("This video source is not available.")
+
+    if PRELOAD_VIDEO_SOURCE:
+        input("Press any key to start the live wallpaper.")
 
     # For a user-specified time, update the wallpaper with the current video feed's latest image.
     live_image_path = os.path.join(os.path.dirname(__file__), "your_live_face.png")
